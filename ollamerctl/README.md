@@ -1,6 +1,14 @@
 # ollamerctl
 
-CLI tool for managing the Ollamer model catalog (`index.json`). Replaces the Python generation scripts.
+CLI tool to generate and maintain the [Ollamer](https://crates.io/crates/ollamer) model catalog (`index.json`) from the local Ollama API.
+
+## Install
+
+```bash
+cargo install ollamerctl
+```
+
+Requires `curl` and `sha256sum` in PATH (standard on Linux/macOS).
 
 ## Commands
 
@@ -10,8 +18,8 @@ Queries the local Ollama API and builds a fresh `index.json`.
 
 ```bash
 ollamerctl init
-ollamerctl init /kvm/ollama/index.json
-ollamerctl init /kvm/ollama/index.json --host http://localhost:11434
+ollamerctl init ~/my-index.json
+ollamerctl init ~/my-index.json --host http://localhost:11434
 ```
 
 For each model, fetches:
@@ -19,53 +27,37 @@ For each model, fetches:
 - Architecture, context length, embedding length, quantization — from `POST /api/show`
 - Capabilities, system prompt, inference parameters — from `POST /api/show`
 
-Fields that cannot be derived automatically (`domain`, `language`, `tags`, `parent`) are set to defaults and should be edited manually in the resulting JSON.
+Fields that cannot be derived automatically (`domain`, `language`, `tags`, `parent`) are set to defaults and can be edited manually in the resulting JSON.
 
 ### `update` — check freshness against registry
 
-Reads an existing `index.json` and checks each model against the Ollama registry, updating `update_status` and `remote_digest`.
+Reads an existing `index.json` and updates `update_status` and `remote_digest` for each model.
 
 ```bash
 ollamerctl update
-ollamerctl update /kvm/ollama/index.json
+ollamerctl update ~/my-index.json
 ```
-
-Status values written:
 
 | Status | Meaning |
 |---|---|
-| `up_to_date` | Local manifest SHA256 matches registry |
+| `up_to_date` | Local manifest matches registry |
 | `update_available` | Newer version exists in registry |
-| `local_only` | No manifest found in local registry path (custom Modelfile) |
-| `not_in_registry` | Manifest exists locally but model not found in registry |
+| `local_only` | Custom Modelfile, no registry entry |
+| `not_in_registry` | Model not found in registry |
 | `unknown` | Registry unreachable or check failed |
-
-Freshness is determined by computing `SHA256(manifest_body_without_trailing_newline)` and comparing with the remote manifest from `registry.ollama.ai`.
-
-## Build
-
-```bash
-cd /kvm/srv/rust/ollamer/app
-cargo build --release
-# binary: target/release/ollamerctl
-```
 
 ## Typical workflow
 
 ```bash
-# First time or after pulling new models:
+# After pulling new models with `ollama pull`:
 ollamerctl init
 
 # Check which models have updates available:
 ollamerctl update
 
-# Restart the web UI to pick up the new index.json:
-fuser -k 7777/tcp
-/kvm/srv/rust/ollamer/web/target/release/ollamer /kvm/ollama/index.json
+# Start the web UI:
+ollamer index.json
 ```
 
-## Notes
-
-- Requires `curl` and `sha256sum` in PATH (standard on Linux).
-- Default index path is `/kvm/ollama/index.json` for all commands.
-- HuggingFace models (`hf.co/...`) are always marked `local_only` — the registry check only covers `registry.ollama.ai`.
+Default index path: `~/.ollama/index.json`.  
+HuggingFace models (`hf.co/...`) are always marked `local_only`.

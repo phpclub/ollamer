@@ -395,9 +395,11 @@ Commands:
   init     Generate index.json from Ollama API (replaces Python script)
   update   Re-check freshness of all models against registry
 
-Default index path: /kvm/ollama/index.json";
+Default index path: ~/.ollama/index.json";
 
-    let default_index = "/kvm/ollama/index.json";
+    let home = std::env::var("HOME").unwrap_or_else(|_| ".".to_string());
+    let default_index_owned = format!("{home}/.ollama/index.json");
+    let default_index = default_index_owned.as_str();
 
     match args.get(1).map(|s| s.as_str()) {
         Some("-h") | Some("--help") | Some("help") => {

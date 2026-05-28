@@ -1014,7 +1014,10 @@ async fn pull_status(State(state): State<AppState>) -> Json<Option<PullProgress>
 async fn main() {
     let index_path = std::env::args()
         .nth(1)
-        .unwrap_or_else(|| "/kvm/ollama/index.json".to_string());
+        .unwrap_or_else(|| {
+            let home = std::env::var("HOME").unwrap_or_else(|_| ".".to_string());
+            format!("{home}/.ollama/index.json")
+        });
 
     let data = std::fs::read_to_string(&index_path)
         .unwrap_or_else(|e| panic!("Cannot read {index_path}: {e}"));
