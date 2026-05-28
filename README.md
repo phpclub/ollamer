@@ -6,13 +6,24 @@
 
 <img src="media/ollamer_logo.png" width="160" alt="Ollamer">
 
-Local Ollama model management system. Consists of two components and a shared catalog file.
+Local Ollama model management system: web dashboard + CLI catalog tool.
 
-```
-/kvm/ollama/
-├── index.json          # model catalog (source of truth)
-├── ollamerctl/         # CLI tool — ollamerctl
-└── web/                # Web UI — ollamer (port 7777)
+## Quick start
+
+```bash
+# 1. Install both tools
+cargo install ollamer
+cargo install ollamerctl
+
+# 2. Generate the model catalog (requires Ollama running on localhost:11434)
+ollamerctl init
+
+# 3. Check freshness against the registry
+ollamerctl update
+
+# 4. Start the web UI
+ollamer ~/.ollama/index.json
+# → http://0.0.0.0:7777
 ```
 
 ## Components
@@ -28,9 +39,8 @@ Rust/Axum web server on port 7777. Reads `index.json` and serves a dark-theme da
 - Bilingual interface: English / Русский
 
 ```bash
-cd web
-cargo build --release
-./target/release/ollamer /kvm/ollama/index.json
+cd web && cargo build --release
+./target/release/ollamer ~/.ollama/index.json
 # → http://0.0.0.0:7777
 ```
 
@@ -71,18 +81,13 @@ Current state: **25 models, 173.94 GB** (as of 2026-05-28).
 ## Typical workflow
 
 ```bash
-# 1. Pull a new model
+# After pulling new models:
 ollama pull qwen3:14b
+ollamerctl init
+ollamerctl update
 
-# 2. Regenerate catalog
-/kvm/srv/rust/ollamer/ollamerctl/target/release/ollamerctl init
-
-# 3. Check freshness
-/kvm/srv/rust/ollamer/ollamerctl/target/release/ollamerctl update
-
-# 4. Restart web UI
-fuser -k 7777/tcp
-/kvm/srv/rust/ollamer/web/target/release/ollamer /kvm/ollama/index.json
+# Restart web UI to pick up changes:
+ollamer ~/.ollama/index.json
 ```
 
 ## Tech stack
