@@ -1,5 +1,7 @@
 # ollamerctl
 
+<img src="https://raw.githubusercontent.com/phpclub/ollamer/master/media/ollamer_logo.png" width="160" alt="Ollamer">
+
 CLI tool to generate and maintain the [Ollamer](https://crates.io/crates/ollamer) model catalog (`index.json`) from the local Ollama API.
 
 ## Install
