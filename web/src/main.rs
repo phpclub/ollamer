@@ -62,8 +62,6 @@ struct T {
     kv_requires: &'static str,
     kv_parent: &'static str,
     // update badges
-    upd_ok: &'static str,
-    upd_ok_title: &'static str,
     upd_new: &'static str,
     upd_new_title: &'static str,
     upd_local: &'static str,
@@ -77,7 +75,6 @@ struct T {
     pull_cancel_btn: &'static str,
     pull_busy: &'static str,
     pull_done: &'static str,
-    pull_cancelled: &'static str,
     // misc
     not_found: &'static str,
 }
@@ -118,8 +115,6 @@ fn t(lang: &str) -> T {
             kv_remote:         "Remote digest",
             kv_requires:       "Требует Ollama",
             kv_parent:         "На основе",
-            upd_ok:            "✓ актуальна",
-            upd_ok_title:      "Актуальная версия",
             upd_new:           "⬆ обновление",
             upd_new_title:     "Доступна новая версия в реестре",
             upd_local:         "🔨 custom",
@@ -132,7 +127,6 @@ fn t(lang: &str) -> T {
             pull_cancel_btn:   "× Стоп",
             pull_busy:         "Уже идёт скачивание другой модели",
             pull_done:         "Готово!",
-            pull_cancelled:    "Отменено",
             not_found:         "Модель не найдена",
         },
         _ => T {
@@ -169,8 +163,6 @@ fn t(lang: &str) -> T {
             kv_remote:         "Remote digest",
             kv_requires:       "Requires Ollama",
             kv_parent:         "Based on",
-            upd_ok:            "✓ up to date",
-            upd_ok_title:      "Latest version",
             upd_new:           "⬆ update",
             upd_new_title:     "Newer version available in registry",
             upd_local:         "🔨 custom",
@@ -183,7 +175,6 @@ fn t(lang: &str) -> T {
             pull_cancel_btn:   "× Stop",
             pull_busy:         "Another model is already being pulled",
             pull_done:         "Done!",
-            pull_cancelled:    "Cancelled",
             not_found:         "Model not found",
         },
     }

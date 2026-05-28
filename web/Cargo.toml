@@ -1,6 +1,6 @@
 [package]
 name = "ollamer"
-version = "0.1.0"
+version = "0.1.1"
 edition = "2024"
 description = "Lightweight web UI for browsing and managing local Ollama models"
 license = "MIT"
