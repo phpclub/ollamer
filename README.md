@@ -1,5 +1,7 @@
 # Ollamer
 
+<p align="center"><img src="media/ollamer_logo.png" width="160" alt="Ollamer"></p>
+
 [![Build](https://github.com/phpclub/ollamer/actions/workflows/rust.yml/badge.svg)](https://github.com/phpclub/ollamer/actions/workflows/rust.yml)
 [![ollamer](https://img.shields.io/crates/v/ollamer?label=ollamer)](https://crates.io/crates/ollamer)
 [![ollamerctl](https://img.shields.io/crates/v/ollamerctl?label=ollamerctl)](https://crates.io/crates/ollamerctl)

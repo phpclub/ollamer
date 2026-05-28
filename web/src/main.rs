@@ -17,6 +17,8 @@ use tokio::net::TcpListener;
 // Localisation
 // ---------------------------------------------------------------------------
 
+const LOGO: &str = "data:image/png;base64,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";
+
 const LANGUAGES: &[(&str, &str)] = &[
     ("en", "English"),
     ("ru", "Русский"),
@@ -691,7 +693,7 @@ fn list_page(index: &Index, filter: Option<&str>, show_embedding: bool, disk_fre
 </head>
 <body>
 <header>
-  <h1><a href="/" style="text-decoration:none;color:inherit">🦙 Ollamer</a></h1>
+  <h1><a href="/" style="text-decoration:none;color:inherit"><img src="{logo}" alt="" style="height:32px;width:32px;object-fit:contain;vertical-align:middle;margin-right:0.4rem"> Ollamer</a></h1>
   <div class="meta">{total} {tr_models} &nbsp;·&nbsp; {size_gb} GB {tr_occupied} &nbsp;·&nbsp; {disk_str} &nbsp;·&nbsp; {tr_checked}: {checked_date}</div>
   <div class="spacer">{lang_sel}</div>
 </header>
@@ -765,7 +767,7 @@ function sortCards(mode) {{
 }}
 </script>
 </body></html>"#,
-        lang = lang, css = CSS,
+        lang = lang, css = CSS, logo = LOGO,
         total = index.total_models, size_gb = index.total_size_gb,
         shown = models.len(), cards = cards, lang_sel = lang_sel,
         disk_str = disk_str, checked_date = checked_date, pull_banner = pull_banner,
@@ -842,7 +844,7 @@ fn detail_page(model: &Model, lang: &str, tr: &T, index: &Index) -> String {
 </head>
 <body>
 <header>
-  <h1><a href="/" style="text-decoration:none;color:inherit">🦙 Ollamer</a></h1>
+  <h1><a href="/" style="text-decoration:none;color:inherit"><img src="{logo}" alt="" style="height:32px;width:32px;object-fit:contain;vertical-align:middle;margin-right:0.4rem"> Ollamer</a></h1>
   <div class="meta">{size}</div>
   <div class="spacer">{lang_sel}</div>
 </header>
@@ -887,7 +889,7 @@ fn detail_page(model: &Model, lang: &str, tr: &T, index: &Index) -> String {
 </div>
 {pull_banner}
 </body></html>"#,
-        lang = lang, css = CSS,
+        lang = lang, css = CSS, logo = LOGO,
         name = html_escape(&model.name), size = fmt_size(model.size_bytes),
         arch = html_escape(&model.architecture), params = html_escape(&model.parameters),
         quant = html_escape(&model.quantization), emb = model.embedding_length,
