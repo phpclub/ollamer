@@ -1,7 +1,8 @@
 # Ollamer
 
-[![ollamer on crates.io](https://img.shields.io/crates/v/ollamer.svg)](https://crates.io/crates/ollamer)
-[![ollamerctl on crates.io](https://img.shields.io/crates/v/ollamerctl.svg)](https://crates.io/crates/ollamerctl)
+[![Build](https://github.com/phpclub/ollamer/actions/workflows/rust.yml/badge.svg)](https://github.com/phpclub/ollamer/actions/workflows/rust.yml)
+[![ollamer](https://img.shields.io/crates/v/ollamer?label=ollamer)](https://crates.io/crates/ollamer)
+[![ollamerctl](https://img.shields.io/crates/v/ollamerctl?label=ollamerctl)](https://crates.io/crates/ollamerctl)
 
 Local Ollama model management system. Consists of two components and a shared catalog file.
 
