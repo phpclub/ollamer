@@ -1,0 +1,5 @@
+/target/
+web/target/
+ollamerctl/target/
+.idea/
+*.log
