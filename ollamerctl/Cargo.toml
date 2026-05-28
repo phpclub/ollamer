@@ -1,0 +1,15 @@
+[package]
+name = "ollamerctl"
+version = "0.1.0"
+edition = "2024"
+description = "CLI tool to generate and maintain the Ollamer model catalog (index.json) from the Ollama API"
+license = "MIT"
+repository = "https://github.com/phpclub/ollamer"
+homepage = "https://github.com/phpclub/ollamer"
+keywords = ["ollama", "llm", "models", "ai", "cli"]
+categories = ["command-line-utilities"]
+readme = "README.md"
+
+[dependencies]
+serde = { version = "1", features = ["derive"] }
+serde_json = "1"
