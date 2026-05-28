@@ -1,0 +1,41 @@
+name: Release
+
+on:
+  push:
+    tags:
+      - 'v*'
+
+jobs:
+  build:
+    strategy:
+      matrix:
+        include:
+          - os: ubuntu-latest
+            suffix: linux-x86_64
+          - os: macos-latest
+            suffix: macos-arm64
+
+    runs-on: ${{ matrix.os }}
+
+    steps:
+      - uses: actions/checkout@v5
+
+      - name: Build ollamer
+        working-directory: web
+        run: cargo build --release
+
+      - name: Build ollamerctl
+        working-directory: ollamerctl
+        run: cargo build --release
+
+      - name: Stage binaries
+        run: |
+          cp web/target/release/ollamer       ollamer-${{ matrix.suffix }}
+          cp ollamerctl/target/release/ollamerctl  ollamerctl-${{ matrix.suffix }}
+
+      - name: Upload to GitHub Release
+        uses: softprops/action-gh-release@v2
+        with:
+          files: |
+            ollamer-${{ matrix.suffix }}
+            ollamerctl-${{ matrix.suffix }}
