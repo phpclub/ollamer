@@ -1,5 +1,8 @@
 # Ollamer
 
+[![ollamer on crates.io](https://img.shields.io/crates/v/ollamer.svg)](https://crates.io/crates/ollamer)
+[![ollamerctl on crates.io](https://img.shields.io/crates/v/ollamerctl.svg)](https://crates.io/crates/ollamerctl)
+
 Local Ollama model management system. Consists of two components and a shared catalog file.
 
 ```
